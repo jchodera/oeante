@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/choderalab/oeante.svg)](https://travis-ci.org/choderalab/oeante)
+
 oeante
 ======
 
