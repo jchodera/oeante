@@ -1,0 +1,38 @@
+package:
+  name: oeante-dev
+  version: !!str 0.0.0
+
+build:
+  preserve_egg_dir: True
+  number: 0
+
+requirements:
+  build:
+    - python
+    - openeye-toolkits
+    - pyyaml
+    - jinja2
+
+  run:
+    - python
+    - openeye-toolkits
+    - pyyaml
+    - jinja2
+
+test:
+  requires:
+    - nose
+  imports:
+    - oeante
+  commands:
+    - nosetests oeante --nocapture --verbosity=2 --with-doctest -a '!slow'
+    - python OEante.py nma.sdf
+    - python OEparmchk.py -f 10.5 -u look.mol2
+
+about:
+  home: https://github.com/choderalab/oeante
+  license: GNU Lesser General Public License v2 or later (LGPLv2+)
+
+
+
+

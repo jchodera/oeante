@@ -1,18 +1,26 @@
 language: c
+
+branches:
+  only:
+    - master
+
 install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq python-dev python-pip python-yaml g++ ftp
-    - sudo pip install conda eventlet
-    - sudo conda init
-    - conda config --add channels http://conda.binstar.org/omnia
-    - conda create --yes --name test nose setuptools numpy biopython pyflakes openmm
-    - export PATH="$HOME/envs/test/bin/:$PATH"
-    
+  - source devtools/ci/install.sh
+  - export PYTHONUNBUFFERED=true
+
 script:
-    - python setup.py install
-    - cd tests
-    - nosetests --with-doctest
+  # this builds the binary, unpacks it, and runs the tests
+  - conda build devtools/conda-recipe
+  # Push to binstar.
 
-after_script:
-    - pyflakes pdbfixer/*.py
+env:
+  matrix:
+    - python=2.7  CONDA_PY=27
+    - python=3.3  CONDA_PY=33
+    - python=3.4  CONDA_PY=34
 
+  global:
+    # encrypted BINSTAR_TOKEN for push of dev package to binstar
+after_success:
+  - echo "after_success"
+  - bash devtools/ci/after_sucess.sh
