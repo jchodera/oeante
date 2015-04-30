@@ -36,7 +36,7 @@ That's why we automate things.  Here's how to use these tools
 
 # Program descriptions
 
-## OEante.py
+## `oeante`
 
 ###  Requirements
 *  Requires the OEchem toolkit from OpenEye.  As currently configured, also
@@ -46,8 +46,8 @@ That's why we automate things.  Here's how to use these tools
   python 2.6 due to the use of sets and product functions.
 
 ###  Usage
-*  OEante.py -h will generate a help page
-*  OEante.py FILE.[smi,sdf,mol2] is all that is really needed.  This will
+*  `oeante -h` will generate a help page
+*  `oeante FILE.[smi,sdf,mol2]` is all that is really needed.  This will
   generate a mol2 format file (look.mol2 by default) with the atom type[1] and
   charge fields set.
 *  The file gaffsmarts.txt must be in the current directory or explicitly
@@ -59,9 +59,9 @@ That's why we automate things.  Here's how to use these tools
 *  Requires the OEchem toolkit from OpenEye.
 
 ###  Usage
-*  OEparmchk.py -h will generate a help page
-*  OEparmchk.py look.mol2 will generate the files:
-     look_pchk.mol2, ante_look.leaprc and ante_look.frcmod
+*  `oeparmchk.py -h` will generate a help page
+*  `oeparmchk.py look.mol2` will generate the files:
+     `look_pchk.mol2`, `ante_look.leaprc`, and `ante_look.frcmod`
 *  These files are sufficient to run leap to generate topology and
   coordinate files and run a gas phase minimization using sander.  The
   bare-bones leaprc file generated here can be modified as needed for more
@@ -69,11 +69,11 @@ That's why we automate things.  Here's how to use these tools
 
 ###  Considerations
 *  The example usage above embodies three important decisions that may not
-  work for your cases.  
+  work for your cases.
   *  Decision 1:  all structural parameters are generated using empirical
     rules.  If you wish the program to use an existing set of parameters,
-    e.g. the current gaff set, this file must be indicated with the -p
-    flag, e.g. -p gaff.dat.
+    e.g. the current gaff set, this file must be indicated with the `-p`
+    flag, e.g. `-p gaff.dat`.
 
   *  Decision 2:  improper torsions receive a force constant of 0.0 by
     default.  The original concept of improper torsions is that they would
@@ -81,11 +81,11 @@ That's why we automate things.  Here's how to use these tools
     molecule might not have an improper torsion applied to every sp2
     center.  My own preference is to apply a force to all planar centers
     and I could easily be persuaded to make this the default.  To invoke
-    this, use the -f flag, e.g. -f 10.5.
+    this, use the `-f` flag, e.g. `-f 10.5`.
 
   *  Decision 3:  angle bending force constants between heavy atoms are fixed
     at 70 and those involving hydrogen at 35.  The uff scheme provides a
-    way to tune these parameters a bit more and can be invoked with the -u
+    way to tune these parameters a bit more and can be invoked with the `-u`
     flag.
 
 ## gaffsmarts.txt
@@ -104,8 +104,8 @@ That's why we automate things.  Here's how to use these tools
 
   The sequence of commands:
 ```
-    OEante.py nma.sdf
-    OEparmchk.py -f 10.5 -u look.mol2
+    oeante nma.sdf
+    oeparmchk -f 10.5 -u look.mol2
     $AMBERHOME/exe/tleap -f ante_look.leaprc
     $AMBERHOME/exe/sander -O -i min.in -o min.out -p lig.top -c lig.crd
     $AMBERHOME/exe/ambpdb -aatm -p lig.top < restrt > min_out.pdb
@@ -114,7 +114,7 @@ That's why we automate things.  Here's how to use these tools
   charges.  The final energy is -27.41 kcal.  Replacing the OEparmchk.py
   and tleap lines with:
 ```
-    OEParmchk.py -f 10.5 -u -p gaff.dat look.mol2
+    oeparmchk.py -f 10.5 -u -p gaff.dat look.mol2
     $AMBERHOME/exe/tleap -f gaff_look.leaprc
 ```
   generates a minimized structure using the gaff parameter set and am1-bcc
@@ -126,4 +126,4 @@ That's why we automate things.  Here's how to use these tools
      that Sybyl atom types are used and assigns atom properties according
      to this assumption.  In order to use GAFF types and defeat this
      process, I prepend an "_" to each type.  This forces oechem to retype.
-     The "_" is removed by OEparmchky.py.
+     The "_" is removed by `oeparmchk`.
