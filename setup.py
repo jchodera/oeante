@@ -50,5 +50,8 @@ setup(
     package_data={'oeante': find_package_data()},
     zip_safe=False,
     install_requires=[],
-    entry_points={'console_scripts': ['oeante = oeante.oeante:main']})
+    entry_points={'console_scripts': [
+            'oeante = oeante.oeante:main',
+            'oeparmchk = oeante.oeparmchk:main'
+            ]})
 
