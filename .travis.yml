@@ -12,7 +12,7 @@ script:
   # build the package
   - conda build devtools/conda-recipe
   # install the package
-  - conda install devtools/conda-package
+  - conda install oeante
   # test the package (very basic)
   - oeante tests/imatinib.sdf
   - oeparmchk -f 10.5 -u look.mol2
