@@ -363,7 +363,7 @@ def fixUnknown(mol):
                     aPost = "U"
             else:
                 aPost = "Z"
-                
+
             newType = aSym+aPost
             atom.SetType(newType)
 
@@ -377,8 +377,9 @@ def oeante(input_filename, options):
     ----------
     input_filename : string
         An OpenEye-readable file (e.g. smi, sdf, mol2) containing one or more molecules to parse.
-    typefile : string, optional, default='gaffsmarts.txt'
+    typefile : string, optional, default=None
         Text file containing SMARTS definitions and corresponding GAFF atom types.
+        If none is specified, will use default 'gaffsmarts.txt'
     nocharges : bool, optional, default=False
         If False, no charges will be created.
     debug : bool, optional, default=False
@@ -388,6 +389,9 @@ def oeante(input_filename, options):
 
     """
 
+    if options.typefile == None:
+        from pkg_resources import resource_filename
+        options.typefile = resource_filename('oeante', 'gaff/gaffsmarts.txt')
 
     Smarts = {}
     ft = open(options.typefile, 'r')
@@ -519,7 +523,7 @@ def main():
     parser = OptionParser(description=desc, version=vers, usage=use)
 
     parser.add_option("-t", "--typefile", action="store", dest="typefile",
-                      default="gaffsmarts.txt",
+                      default=None,
                       help="input atom type data file in format \
                       SMARTS Name [default: %default]")
     parser.add_option("-n", "--nocharges", action="store_true", dest="nocharges",

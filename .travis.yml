@@ -9,9 +9,13 @@ install:
   - export PYTHONUNBUFFERED=true
 
 script:
-  # this builds the binary, unpacks it, and runs the tests
+  # build the package
   - conda build devtools/conda-recipe
-  # Push to binstar.
+  # install the package
+  - conda install devtools/conda-package
+  # test the package (very basic)
+  - oeante tests/imatinib.sdf
+  - oeparmchk -f 10.5 -u look.mol2
 
 env:
   matrix:

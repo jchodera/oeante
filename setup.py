@@ -28,12 +28,11 @@ Operating System :: MacOS
 """
 
 
-def find_package_data():
+def find_package_data(data_root, package_root):
     files = []
-    for root, dirnames, filenames in os.walk('oeante'):
+    for root, dirnames, filenames in os.walk(data_root):
         for fn in filenames:
-            files.append(relpath(join(root, fn), 'oeante'))
-
+            files.append(relpath(join(root, fn), package_root))
     return files
 
 setup(
@@ -47,7 +46,7 @@ setup(
     platforms=['Linux', 'Mac OS-X', 'Unix'],
     classifiers=CLASSIFIERS.splitlines(),
     packages=find_packages(),
-    package_data={'oeante': find_package_data()},
+    package_data={'oeante': find_package_data('oeante/gaff', 'oeante')},
     zip_safe=False,
     install_requires=[],
     entry_points={'console_scripts': [
