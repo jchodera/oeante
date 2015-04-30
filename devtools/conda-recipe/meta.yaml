@@ -9,13 +9,13 @@ build:
 requirements:
   build:
     - python
-    - openeye-toolkits
+    #- openeye-toolkits # not yet conda-installable
     - pyyaml
     - jinja2
 
   run:
     - python
-    - openeye-toolkits
+    #- openeye-toolkits # not yet conda-installable
     - pyyaml
     - jinja2
 
